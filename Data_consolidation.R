@@ -80,13 +80,18 @@ mwiB1_data <- mwi_B1 %>%
             Lat = max(GPS_South),
             #Min-Max of Age
             Age = sprintf("%02d%02d", min(age2, na.rm = T), max(age2, na.rm = T)),
+            #number of people & positive people
+            Num_sampled_Sh = sum(!is.na(haem)), Num_pos_Sh = sum(haem == 1, na.rm = T), 
+            Num_sampled_Sman = sum(!is.na(man)), Num_pos_Sman = sum(man == 1, na.rm = T),
+            Num_sampled_anySCH = sum(!is.na(anySCH)), Num_pos_anySCH = sum(anySCH == 1, na.rm = T),
   # above taken from previous code
   
   # get mean prevalence by school
             Shprev = mean(haem,na.rm=T),
             Smanprev = mean(man,na.rm=T),
             anySCHprev = mean(anySCH,na.rm=T)) %>% 
-  select(Year,District=DistrictName, School=SchoolName,Long,Lat,Test,Age,Shprev,Smanprev,anySCHprev)
+  select(Year,District=DistrictName, School=SchoolName,Long,Lat,Test,Age,
+         Num_sampled_Sh,Num_pos_Sh,Shprev,Num_sampled_Sman,Num_pos_Sman, Smanprev,Num_sampled_anySCH,Num_pos_anySCH,anySCHprev)
 
 mwi_B1 %>%filter(!is.na(SchoolName), SchoolName!="MKHOSI F.P") %>% group_by(DistrictName) %>%summarise(n=n_distinct(SchoolName))%>% summarise(nsum=sum(n)) #ok
 
@@ -103,10 +108,14 @@ mwiB2_data <- mwi_B2 %>%
             Lat = -max(arrivaldecimaldegreesouth),
             #Min-Max of Age
             Age = sprintf("%02d%02d", min(ageyears, na.rm = T), max(ageyears, na.rm = T)),
+            Num_sampled_Sh = sum(!is.na(Sh)), Num_pos_Sh = sum(Sh == 1, na.rm = T), 
+            Num_sampled_Sman = sum(!is.na(Sm)), Num_pos_Sman = sum(Sm == 1, na.rm = T),
+            Num_sampled_anySCH = sum(!is.na(anySCH)), Num_pos_anySCH = sum(anySCH == 1, na.rm = T),
             Shprev = mean(Sh,na.rm=T),
             Smanprev = mean(Sm,na.rm=T),
             anySCHprev = mean(anySCH,na.rm=T)) %>% 
-  select(Year,District=districtname, School=school,Long,Lat,Test,Age,Shprev,Smanprev,anySCHprev)
+  select(Year,District=districtname, School=school,Long,Lat,Test,Age,
+         Num_sampled_Sh,Num_pos_Sh,Shprev,Num_sampled_Sman,Num_pos_Sman, Smanprev,Num_sampled_anySCH,Num_pos_anySCH,anySCHprev)
 
 length(unique(mwi_B2$school))  #ok
 
@@ -123,10 +132,15 @@ mwiB3_data <- mwi_B3 %>%
             Lat =  -max(GPSNorth),
             #Min-Max of Age
             Age = sprintf("%02d%02d", min(Age, na.rm = T), max(Age, na.rm = T)),
+            Num_sampled_Sh = sum(!is.na(Shaem)), Num_pos_Sh = sum(Shaem == 1, na.rm = T), 
+            Num_sampled_Sman = sum(!is.na(Smans)), Num_pos_Sman = sum(Smans == 1, na.rm = T),
+            Num_sampled_anySCH = sum(!is.na(anySCH)), Num_pos_anySCH = sum(anySCH == 1, na.rm = T),
             Shprev = mean(Shaem,na.rm=T),
             Smanprev = mean(Smans,na.rm=T),
             anySCHprev = mean(anySCH,na.rm=T)) %>% 
-    select(Year,District=DistrictName, School=SchoolName,Long,Lat,Test,Age,Shprev,Smanprev,anySCHprev)
+    select(Year,District=DistrictName, School=SchoolName,Long,Lat,Test,Age,
+           Num_sampled_Sh,Num_pos_Sh,Shprev,Num_sampled_Sman,Num_pos_Sman, Smanprev,Num_sampled_anySCH,Num_pos_anySCH,anySCHprev)
+
 
 length(unique(mwi_B3$SchoolName)) #ok
 
@@ -143,10 +157,15 @@ mwiR1_data <- mwi_R1 %>%
             Lat = max(GPS_lat_NEW),
             #Min-Max of Age
             Age = sprintf("%02d%02d", min(Age, na.rm = T), max(Age, na.rm = T)),
+            Num_sampled_Sh = sum(!is.na(Shaem_bin)), Num_pos_Sh = sum(Shaem_bin == 1, na.rm = T), 
+            Num_sampled_Sman = sum(!is.na(Smans_bin)), Num_pos_Sman = sum(Smans_bin == 1, na.rm = T),
+            Num_sampled_anySCH = sum(!is.na(anySCH)), Num_pos_anySCH = sum(anySCH == 1, na.rm = T),
             Shprev = mean(Shaem_bin,na.rm=T),
             Smanprev = mean(Smans_bin,na.rm=T),
             anySCHprev = mean(anySCH,na.rm=T)) %>% 
-  select(Year,District=DistrictName.x, School=NewSchoolName.x,Long,Lat,Test,Age,Shprev,Smanprev,anySCHprev)
+  select(Year,District=DistrictName.x, School=NewSchoolName.x,Long,Lat,Test,Age,
+         Num_sampled_Sh,Num_pos_Sh,Shprev,Num_sampled_Sman,Num_pos_Sman, Smanprev,Num_sampled_anySCH,Num_pos_anySCH,anySCHprev)
+
 
 mwi_R1 %>% group_by(DistrictName.x) %>%summarise(n=n_distinct(NewSchoolName.x))%>% summarise(nsum=sum(n)) #ok
 
@@ -162,10 +181,14 @@ mwiR2_data <- mwi_R2 %>%
             Long = max(location.Longitude), 
             Lat = max(location.Latitude),
             Age = sprintf("%02d%02d", min(age, na.rm = T), max(age, na.rm = T)),
+            Num_sampled_Sh = sum(!is.na(Shaem_bin)), Num_pos_Sh = sum(Shaem_bin == 1, na.rm = T), 
+            Num_sampled_Sman = sum(!is.na(Smans_bin)), Num_pos_Sman = sum(Smans_bin == 1, na.rm = T),
+            Num_sampled_anySCH = sum(!is.na(anySCH)), Num_pos_anySCH = sum(anySCH == 1, na.rm = T),
             Shprev = mean(Shaem_bin,na.rm=T),
             Smanprev = mean(Smans_bin,na.rm=T),
             anySCHprev = mean(anySCH,na.rm=T)) %>% 
-  select(Year,District=region_sch, School=schoolName_sch,Long,Lat,Test,Age,Shprev,Smanprev,anySCHprev)
+  select(Year,District=region_sch, School=schoolName_sch,Long,Lat,Test,Age,
+         Num_sampled_Sh,Num_pos_Sh,Shprev,Num_sampled_Sman,Num_pos_Sman, Smanprev,Num_sampled_anySCH,Num_pos_anySCH,anySCHprev)
 
 mwi_R2 %>% group_by(region_sch) %>%summarise(n=n_distinct(schoolName_sch))%>% summarise(nsum=sum(n)) #ok
 
@@ -181,10 +204,15 @@ mwiR3_data <- mwi_R3 %>%
             Long = max(lon), 
             Lat = max(lat),
             Age = sprintf("%02d%02d", min(age, na.rm = T), max(age, na.rm = T)),
+            Num_sampled_Sh = sum(!is.na(Shaem_bin)), Num_pos_Sh = sum(Shaem_bin == 1, na.rm = T), 
+            Num_sampled_Sman = sum(!is.na(Smans_bin)), Num_pos_Sman = sum(Smans_bin == 1, na.rm = T),
+            Num_sampled_anySCH = sum(!is.na(anySCH)), Num_pos_anySCH = sum(anySCH == 1, na.rm = T),
             Shprev = mean(Shaem_bin,na.rm=T),
             Smanprev = mean(Smans_bin,na.rm=T),
             anySCHprev = mean(anySCH,na.rm=T)) %>% 
-  select(Year,District=district_name, School=school_name,Long,Lat,Test,Age,Shprev,Smanprev,anySCHprev)
+  select(Year,District=district_name, School=school_name,Long,Lat,Test,Age,
+         Num_sampled_Sh,Num_pos_Sh,Shprev,Num_sampled_Sman,Num_pos_Sman, Smanprev,Num_sampled_anySCH,Num_pos_anySCH,anySCHprev)
+
 
 mwi_R3 %>% group_by(district_name) %>%summarise(n=n_distinct(school_name))%>% summarise(nsum=sum(n)) #ok
 
