@@ -12,7 +12,6 @@
 # Set up, load functions
 #==============================================================================#
 
-setwd("Z:/Publications & Projects/2022/Lancaster MSc Project")
 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load("tidyverse","lubridate")
